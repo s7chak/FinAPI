@@ -6,7 +6,7 @@ import os, json
 import finapi_config as config
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 CACHE_FILE = config.hero_lines_file
 f_months = config.hero_snap_months
 f_delay = config.yfin_delay_sec
@@ -48,5 +48,5 @@ def home_finapi():
     return "FinAPI running for scaiverse: v1.0"
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 1000))  # Default to 8080 if PORT is not set
+    port = int(os.environ.get("PORT", 8080))  # Default to 8080 if PORT is not set
     app.run(host="0.0.0.0", port=port)
