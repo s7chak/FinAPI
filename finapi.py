@@ -6,6 +6,7 @@ import os, json
 import finapi_config as config
 
 app = Flask(__name__)
+CORS(app)
 CACHE_FILE = config.hero_lines_file
 f_months = config.hero_snap_months
 f_delay = config.yfin_delay_sec
@@ -42,7 +43,9 @@ def market_lines():
         print(str(e))
         return make_response(jsonify({"error": str(e)}), 500)
 
+@app.route("/")
+def home_finapi():
+    return "FinAPI running for scaiverse: v1.0"
 
 if __name__ == "__main__":
-    CORS(app)
     app.run()
