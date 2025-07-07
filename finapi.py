@@ -45,4 +45,4 @@ def market_lines():
 
 if __name__ == "__main__":
     CORS(app)
-    app.run(port=8091, debug=True)
+    app.run()
