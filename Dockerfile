@@ -19,6 +19,7 @@ EXPOSE $PORT
 ENV NAME FinAPI
 
 # Run app.py when the container launches
-#CMD ["python", "finapi.py"]
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 1 --timeout 0 finapi:app
+#CMD exec gunicorn --bind :$PORT --workers 1 --threads 1 --timeout 0 finapi:app
+CMD ["python", "finapi.py"]
+
 
