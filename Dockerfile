@@ -16,9 +16,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE $PORT
 
 # Define environment variable
-ENV NAME QuizardAPI
+ENV NAME FinAPI
 
 # Run app.py when the container launches
 #CMD ["python", "finapi.py"]
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 1 --timeout 0 app:app
+CMD exec gunicorn --bind :$PORT --workers 1 --threads 1 --timeout 0 finapi:app
 
