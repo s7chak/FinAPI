@@ -60,3 +60,53 @@ def make_market_plot(df, req_type):
         )
     )
     return fig, json.loads(pio.to_json(fig))
+
+
+def stock_analysis_init(ticker):
+    def safe_get(key):
+        return info[key] if key in info else None
+    stock = Stock()
+    stock.ticker = ticker
+    try:
+        yf_ticker = yf.Ticker(ticker)
+        info = yf_ticker.info
+        if "currentPrice" not in info:
+            raise Exception("No latest price information, symbol might be delisted.")
+    except Exception as e:
+        raise e
+    stock.company_name = safe_get("longName") or safe_get("shortName")
+    stock.current_price = safe_get("currentPrice")
+    stock.market_cap = human_readable_number(safe_get("marketCap"))
+    stock.enterprise_value = human_readable_number(safe_get("enterpriseValue"))
+    stock.shares_outstanding = human_readable_number(safe_get("sharesOutstanding"))
+    stock.pe_ratio_ttm = safe_get("trailingPE")
+    stock.pe_ratio_forward = safe_get("forwardPE")
+    stock.peg_ratio = safe_get("pegRatio")
+    stock.pb_ratio = safe_get("priceToBook")
+    stock.ps_ratio = safe_get("priceToSalesTrailing12Months")
+    stock.ev_ebitda = safe_get("enterpriseToEbitda")
+    stock.eps_ttm = safe_get("trailingEps")
+    stock.eps_forward = safe_get("forwardEps")
+    stock.revenue_ttm = human_readable_number(safe_get("totalRevenue"))
+    stock.net_income = human_readable_number(safe_get("netIncomeToCommon"))
+    stock.gross_margin = safe_get("grossMargins")
+    stock.operating_margin = safe_get("operatingMargins")
+    stock.roe = safe_get("returnOnEquity")
+    stock.roa = safe_get("returnOnAssets")
+    stock.debt_to_equity = safe_get("debtToEquity")
+    stock.current_ratio = safe_get("currentRatio")
+    stock.quick_ratio = safe_get("quickRatio")
+    stock.dividend_yield = safe_get("dividendYield")
+    stock.dividend_rate = safe_get("dividendRate")
+    # stock.ex_dividend_date = safe_get("exDividendDate")
+    stock.payout_ratio = safe_get("payoutRatio")
+    stock.beta = safe_get("beta")
+    stock.fifty_two_week_high = safe_get("fiftyTwoWeekHigh")
+    stock.fifty_two_week_low = safe_get("fiftyTwoWeekLow")
+    stock.one_year_target = safe_get("targetMeanPrice")
+    # stock.earnings_date = yf_ticker.calendar if yf_ticker.calendar is not None else None
+    stock.sector = safe_get("sector")
+    stock.industry = safe_get("industry")
+    stock.employees = safe_get("fullTimeEmployees")
+
+    return stock.to_dict()

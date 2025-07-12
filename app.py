@@ -43,6 +43,18 @@ def market_lines():
         print(str(e))
         return make_response(jsonify({"error": str(e)}), 500)
 
+@app.route("/api/stockanalysis-1", methods=['GET'])
+@cross_origin()
+def stock_analysis_1():
+    try:
+        ticker = request.args.get("ticker", "").upper()
+        data = util.stock_analysis_init(ticker)
+        print(f"Stock analysis initial done: {ticker}")
+        return make_response(jsonify(data), 200)
+    except Exception as e:
+        print(str(e))
+        return make_response(jsonify({"message": str(e)}), 500)
+
 @app.route("/")
 def home_finapi():
     return "FinAPI running for scaiverse: v1.0"
