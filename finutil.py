@@ -110,3 +110,23 @@ def stock_analysis_init(ticker):
     stock.employees = safe_get("fullTimeEmployees")
 
     return stock.to_dict()
+
+def human_readable_number(n):
+    if n is None:
+        return 'nil'
+    n = float(n)
+    if abs(n) >= 1_000_000_000_000:
+        return f"{n/1_000_000_000_000:.3f}T"
+    elif abs(n) >= 1_000_000_000:
+        return f"{n/1_000_000_000:.3f}B"
+    elif abs(n) >= 1_000_000:
+        return f"{n/1_000_000:.3f}M"
+    elif abs(n) >= 1_000:
+        return f"{n/1_000:.3f}K"
+    else:
+        return str(n)
+
+def stock_analysis_enrich(tickers=None):
+    # stock_rater = Stock_Rater(tickers)
+    # df = stock_rater.enrich_stocks()
+    pass
