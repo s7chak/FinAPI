@@ -7,7 +7,7 @@ import plotly.io as pio
 import pandas as pd
 import yfinance as yf
 import finapi_config as config
-
+from fin_objects import Stock
 
 def get_market_lines(delay_sec=1.5, months=6):
     end_date = datetime.today()
